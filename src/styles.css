@@ -56,3 +56,32 @@ h6 {
 #__next {
   isolation: isolate;
 }
+
+body {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100dvh;
+}
+
+#wrapper {
+  width: 800px;
+  height: 600px;
+  background-color: grey;
+  border-radius: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  padding: 25px;
+}
+
+#header {
+  display: flex;
+  flex-direction: column;
+}
+
+#input {
+  display: flex;
+  justify-content: center;
+}
