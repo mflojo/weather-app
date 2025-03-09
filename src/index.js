@@ -1,17 +1,29 @@
 import "./styles.css";
 
 const apiKeyWeather = 'YLXE9DSHRKEVZ7PCMNGMXTJ85';
-const apiKeyGif = 'bb2006d9d3454758be1a99cfad65913d';
+const apiKeyGif = 'IuiLkuHL5ePGvryGmzoHouVhIzCowyMW';
 const img = document.querySelector('img');
 const searchBox = document.getElementById('searchBox');
 const searchBtn = document.getElementById('searchBtn');
 const errorMsg = document.getElementById('errorMsg');
 const defaultGif = 'https://media.giphy.com/media/TqiwHbFBaZ4ti/giphy.gif';
 
-async function getNewGif(query = vancouver) {
-    const response = await fetch(`https://api.giphy.com/v1/gifs/translate?api_key=${apiKeyGif}=${encodeURIComponent(query)}`, {mode: 'cors'});
-    const cityGif = await response.json();
-    img.src = cityGif.data.images.url;
+img.src = defaultGif;
+
+async function getNewGif(query = 'vancouver') {
+    const url = `https://api.giphy.com/v1/gifs/translate?api_key=${apiKeyGif}&s=${encodeURIComponent(query)+'city'}`;
+    try {
+        const response = await fetch(url, { mode: 'cors' });
+        if (!response.ok) {
+            throw new Error('Network response was not ok');
+        }
+        const cityGif = await response.json();
+        img.src = cityGif.data.images.original.url;
+    } catch (error) {
+        console.error('Error fetching the GIF:', error);
+        errorMsg.textContent = 'Failed to fetch GIF. Please try again.';
+        img.src = defaultGif; // Fallback to default GIF on error
+    }
 }
 
 getNewGif();
